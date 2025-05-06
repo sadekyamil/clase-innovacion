@@ -1,1 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        .contenido {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            scroll-snap-type: y mandatory;
+            scroll-snap-stop: always;
+        }
+
+        .seccion {
+            scroll-snap-align: start;
+        }
+
+        .n1 {
+            position: relative;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient( #111126);
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .n2 {
+            position: relative;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient( #111126);
+
+            justify-content: center;
+            align-items: center;
+        }
+        .n3 {
+            position: relative;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient( #111126);
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        .n4 {
+            position: relative;
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient( #111126);
+
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+
+        @media (orientation: landscape) {
+            .cubo h1 {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: rgb(0, 0, 0);
+                font-size: 5vh;
+            }
+            .cubo{
+            background-color: rgb(22, 183, 7);
+        }
+        }
+
+        @media (orientation: portrait) {
+            .cubo h1 {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: rgb(0, 0, 0);
+                font-size: 5vh;
+            }
+            .cubo{
+            background-color: rgb(178, 101, 0);
+        }
+        }
+
+        @media (orientation: landscape) and (min-aspect-ratio: 21/9) {
+            .cubo {
+                width: 233.3vh;
+                height: 100vh;
+                position: relative;
+            }
+        }
+
+        @media (orientation: landscape) and (max-aspect-ratio: 21/9) {
+            .cubo {
+                width: 233.3vh;
+                height: 100vh;
+                position: relative;
+            }
+        }
+
+        @media (orientation: landscape) and (max-aspect-ratio: 16/9) {
+            .cubo {
+                width: 177.7vh;
+                height: 100vh;
+                position: relative;
+            }
+        }
+
+        @media (orientation: landscape) and (max-aspect-ratio: 4/3) {
+            .cubo {
+                width: 133vh;
+                height: 100vh;
+                position: relative;
+            }
+        }
+
+        @media (orientation: landscape) and (max-aspect-ratio: 1/1) {
+            .cubo {
+                width: 100vh;
+                height: 100vh;
+                position: relative;
+            }
+        }
+
+
+        
+
+        @media (orientation: portrait) and (max-aspect-ratio: 1/1) {
+            .cubo {
+            width: 100vw;
+            height: 100vw;
+            position: relative;
+            overflow: hidden;
+            background-color: rgb(0, 255, 17);
+            }
+        }
+        @media (orientation: portrait) and (max-aspect-ratio: 3/4) {
+            .cubo {
+                width: 100vw;
+                height: 133vw;
+                position: relative;
+                overflow: hidden;
+                background-color: rgb(231, 0, 0);
+            }
+            
+        }
+        @media (orientation: portrait) and (max-aspect-ratio: 2/3) {
+            .cubo {
+                width: 100vw;
+                height: 150vw;
+                position: relative;
+                overflow: hidden;
+                background-color: rgb(255, 0, 183);
+            }
+
+
+            
+        }
+        @media (orientation: portrait) and (max-aspect-ratio: 9/16) {
+            .cubo {
+                width: 100vw;
+                height: 177.7vw;
+                position: relative;
+                overflow: hidden;
+                background-color: rgb(21, 0, 255);
+            }
+
+
+        }
+        @media (orientation: portrait) and (max-aspect-ratio: 9/20) {
+            .cubo {
+                width: 100vw;
+                height: 222.2vw;
+                position: relative;
+                overflow: hidden;
+                background-color: rgb(229, 255, 0);
+            }
+
+
+        }
+
+        @keyframes slide360 {
+            0% {
+                transform: translateX(0%);
+            }
+
+            33.33% {
+                transform: translateX(-100%);
+            }
+
+            66.66% {
+                transform: translateX(-200%);
+            }
+
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        .carousel {
+            background-image: radial-gradient(#111126);
+            height: 100%;
+            width: 100%;
+        }
+
+        .carousel .list {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .item {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transform: translateX(calc(100vw * var(--calculation)));
+            transition: 0.5s;
+        }
+
+        .item.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .carousel {
+            --calculation: 1;
+        }
+
+        .item {
+            transform: translateX(calc(100vw * var(--calculation)));
+            transition: 0.5s;
+            opacity: 0;
+        }
+
+        .item figure img {
+            transform: rotate(0deg);
+            transition: transform 0.5s;
+            transition-delay: 0.3s;
+        }
+
+        .item.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .item.active figure img {
+            transform: rotate(-20deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contenido">
+        <section class="seccion n1">
+            <div class="cubo">
+                <h1>login/registro</h1>
+            </div>
+        </section>
+        <section class="seccion n2">
+            <div class="cubo">
+                <h1>convocatorias de votacion</h1>
+            </div>
+        </section>
+        <section class="seccion n3">
+            <div class="cubo">
+                <h1>candidatos de la votacion</h1>
+            </div>
+        </section>
+        <section class="seccion n4">
+            <div class="cubo">
+                <h1>confirmacion del voto</h1>
+            </div>
+        </section>
+        <section class="seccion n5">
+            <div class="cubo">
+                <h1>comprobante de voto</h1>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
