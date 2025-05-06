@@ -25,13 +25,13 @@
         .seccion {
             scroll-snap-align: start;
         }
-        
+
         .n5 .n4 .n3 .n2 .n1 {
             position: relative;
             display: flex;
             width: 100vw;
             height: 100vh;
-            background-image: radial-gradient( #111126);
+            background-image: radial-gradient( #1F51FF);
 
             justify-content: center;
             align-items: center;
@@ -41,7 +41,7 @@
 
         
         .cubo{
-            background-color: #1F51FF;
+            background-color: #0000004f;
         }
 
         @media (orientation: landscape) {
@@ -52,6 +52,9 @@
                 transform: translate(-50%, -50%);
                 color: rgb(0, 0, 0);
                 font-size: 5vh;
+            }
+            .cubo{
+                position: relative;
             }
         }
 
@@ -64,13 +67,15 @@
                 color: rgb(0, 0, 0);
                 font-size: 10vw;
             }
+            .cubo{
+                position: relative;
+            }
         }
 
         @media (orientation: landscape) and (min-aspect-ratio: 21/9) {
             .cubo {
                 width: 233.3vh;
                 height: 100vh;
-                position: relative;
             }
         }
 
@@ -78,7 +83,6 @@
             .cubo {
                 width: 233.3vh;
                 height: 100vh;
-                position: relative;
             }
         }
 
@@ -86,7 +90,6 @@
             .cubo {
                 width: 177.7vh;
                 height: 100vh;
-                position: relative;
             }
         }
 
@@ -94,7 +97,6 @@
             .cubo {
                 width: 133vh;
                 height: 100vh;
-                position: relative;
             }
         }
 
@@ -102,7 +104,6 @@
             .cubo {
                 width: 100vh;
                 height: 100vh;
-                position: relative;
             }
         }
 
@@ -113,16 +114,12 @@
             .cubo {
             width: 100vw;
             height: 100vw;
-            position: relative;
-            overflow: hidden;
             }
         }
         @media (orientation: portrait) and (max-aspect-ratio: 3/4) {
             .cubo {
                 width: 100vw;
                 height: 133vw;
-                position: relative;
-                overflow: hidden;
             }
             
         }
@@ -130,8 +127,6 @@
             .cubo {
                 width: 100vw;
                 height: 150vw;
-                position: relative;
-                overflow: hidden;
             }
 
 
@@ -141,8 +136,6 @@
             .cubo {
                 width: 100vw;
                 height: 177.7vw;
-                position: relative;
-                overflow: hidden;
             }
 
 
@@ -151,8 +144,6 @@
             .cubo {
                 width: 100vw;
                 height: 222.2vw;
-                position: relative;
-                overflow: hidden;
             }
 
 
