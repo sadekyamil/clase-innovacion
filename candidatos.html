@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Votación</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .circular-image {
+            border-radius: 50%;
+            object-fit: cover;
+            width: 100px;
+            height: 100px;
+        }
+        .candidate-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        .candidate-name {
+            margin-right: 1rem;
+        }
+        .candidate-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* Distribuye los botones */
+            align-items: center; /* Alinea verticalmente los botones si es necesario */
+        }
+        .vote-button {
+            margin-left: auto; /* Empuja el botón de votar a la derecha */
+        }
+        .proposals-button {
+            margin-right: auto; /* Empuja el botón de ver propuestas a la izquierda */
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-2xl font-semibold text-blue-600 text-center mb-8">Dashboard de Votación</h1>
+
+    <div id="candidatosContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+    <div id="sinResultados" class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-md hidden mt-8">
+        No se han encontrado candidatos.
+    </div>
+
+    <script>
+        const candidatos = [
+            {
+                nombre: "Candidato A",
+                cargo: "presidente",
+                partido: "Partido X",
+                experiencia: "Amplia experiencia en gestión pública.",
+                propuestas: "Desarrollo económico, educación de calidad, seguridad ciudadana.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["economía", "educación", "seguridad"]
+            },
+            {
+                nombre: "Candidato B",
+                cargo: "presidente",
+                partido: "Partido Y",
+                experiencia: "Liderazgo en el sector privado.",
+                propuestas: "Reforma fiscal, apoyo a emprendedores, sostenibilidad ambiental.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["economía", "medio ambiente"]
+            },
+            {
+                nombre: "Candidato C",
+                cargo: "presidente",
+                partido: "Partido Z",
+                experiencia: "Gestión municipal y proyectos sociales.",
+                propuestas: "Mejora de servicios públicos, desarrollo urbano, participación ciudadana.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["servicios", "urbanismo", "participacion"]
+            },
+            {
+                nombre: "Candidato D",
+                cargo: "presidente",
+                partido: "Partido W",
+                experiencia: "Trabajo legislativo y defensa de derechos.",
+                propuestas: "Legislación social, reforma de salud, igualdad de género.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["salud", "igualdad", "legislacion"]
+            },
+             {
+                nombre: "Candidato E",
+                cargo: "presidente",
+                partido: "Partido X",
+                experiencia: "Experiencia en el sector energético.",
+                propuestas: "Transición energética, inversión en renovables, empleo verde.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["energía", "medio ambiente", "economía"]
+            },
+            {
+                nombre: "Candidato F",
+                cargo: "presidente",
+                partido: "Partido Y",
+                experiencia: "Planificación urbana y desarrollo comunitario.",
+                propuestas: "Espacios públicos, movilidad sostenible, vivienda accesible.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["urbanismo", "movilidad", "vivienda"]
+            },
+            {
+                nombre: "Candidato G",
+                cargo: "presidente",
+                partido: "Partido Z",
+                experiencia: "Defensa de los derechos de los trabajadores.",
+                propuestas: "Derechos laborales, salario digno, seguridad social.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["laboral", "economía", "seguridad"]
+            },
+            {
+                nombre: "Candidato H",
+                cargo: "presidente",
+                partido: "Partido W",
+                experiencia: "Liderazgo en organizaciones no gubernamentales.",
+                propuestas: "Justicia social, derechos humanos, participación ciudadana.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["justicia", "derechos", "participacion"]
+            },
+            {
+                nombre: "Candidato I",
+                cargo: "presidente",
+                partido: "Partido X",
+                experiencia: "Gestión de servicios de salud municipales.",
+                propuestas: "Acceso a la salud, prevención de enfermedades, bienestar comunitario.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["salud", "servicios", "bienestar"]
+            },
+            {
+                nombre: "Candidato J",
+                cargo: "presidente",
+                partido: "Partido Y",
+                experiencia: "Promoción de la cultura y las artes.",
+                propuestas: "Apoyo a la cultura, patrimonio, diversidad cultural.",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                votos: 0,
+                temas: ["cultura", "patrimonio"]
+            }
+        ];
+
+        const candidatosContainer = document.getElementById("candidatosContainer");
+        const sinResultadosMessage = document.getElementById("sinResultados");
+
+        function generarTarjetasCandidatos(candidatosFiltrados) {
+            candidatosContainer.innerHTML = "";
+            if (candidatosFiltrados.length === 0) {
+                sinResultadosMessage.classList.remove("hidden");
+            } else {
+                sinResultadosMessage.classList.add("hidden");
+                candidatosFiltrados.forEach(candidato => {
+                    const tarjeta = document.createElement("div");
+                    tarjeta.className = "bg-white shadow-md rounded-lg p-4 flex flex-col justify-between";
+
+                    tarjeta.innerHTML = `
+                        <div class="candidate-header">
+                            <h3 class="text-xl font-semibold text-gray-800 candidate-name">${candidato.nombre}</h3>
+                            <img src="${candidato.imagen}" alt="Imagen de ${candidato.nombre}" class="circular-image rounded-md">
+                        </div>
+                        <div class="candidate-details">
+                            <p class="text-gray-600 mb-1"><span class="font-semibold">Cargo:</span> ${candidato.cargo}</p>
+                            <p class="text-gray-600 mb-1"><span class="font-semibold">Partido:</span> ${candidato.partido}</p>
+                            <p class="text-gray-600 mb-2"><span class="font-semibold">Experiencia:</span> ${candidato.experiencia}</p>
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="font-semibold text-gray-700">Propuestas:</h4>
+                            <p class="text-gray-600">${candidato.propuestas}</p>
+                        </div>
+                        <div class="button-container">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline proposals-button" onclick="verPropuestas('${candidato.nombre}')">Ver Propuestas</button>
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline vote-button" onclick="votar('${candidato.nombre}')">Votar</button>
+                        </div>
+                    `;
+                    candidatosContainer.appendChild(tarjeta);
+                });
+            }
+        }
+
+        function votar(nombreCandidato) {
+            const candidatoSeleccionado = candidatos.find(c => c.nombre === nombreCandidato);
+            if (candidatoSeleccionado) {
+                candidatoSeleccionado.votos++;
+                alert(`Has votado por ${nombreCandidato}. ¡Gracias por participar!`);
+                console.log(candidatos);
+            } else {
+                alert(`No se encontró el candidato ${nombreCandidato}.`);
+            }
+        }
+
+        function verPropuestas(nombreCandidato) {
+             const candidatoSeleccionado = candidatos.find(c => c.nombre === nombreCandidato);
+             if (candidatoSeleccionado) {
+                  alert(`Propuestas de ${nombreCandidato}: ${candidatoSeleccionado.propuestas}`);
+             }else{
+                alert(`No se encontró el candidato ${nombreCandidato}.`);
+             }
+        }
+
+        for (let candidato of candidatos) {
+            candidato.cargo = "presidente";
+        }
+
+        generarTarjetasCandidatos(candidatos);
+    </script>
+</body>
+</html>
