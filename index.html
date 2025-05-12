@@ -3,86 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio de Sesión</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <title>Menú Principal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background-color: #575757;
+        }
+        .container {
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            color: #444;
+            margin-bottom: 30px;
+        }
+        .menu-button {
+            display: none;
+            background-color: #333;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px auto;
+        }
+        .menu-button:hover {
+            background-color: #575757;
+        }
+        @media screen and (max-width: 600px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+            }
+            nav {
+                display: block;
+                position: relative;
+            }
+            .menu-button {
+                display: block;
+            }
+            nav ul.show {
+                display: flex;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-semibold mb-6 text-center text-gray-800">Iniciar sesión</h2>
-        <form id="login-form">
-            <div class="mb-4">
-                <label for="login-email" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico</label>
-                <input type="email" id="login-email" name="login-email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese su correo electrónico">
-                <div id="login-email-error" class="text-red-500 text-xs italic" style="display: none;"></div>
-            </div>
-            <div class="mb-6">
-                <label for="login-password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
-                <input type="password" id="login-password" name="login-password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese su contraseña">
-                <div id="login-password-error" class="text-red-500 text-xs italic" style="display: none;"></div>
-            </div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">Iniciar sesión</button>
-        </form>
-        <div class="mt-4 text-center text-gray-600">
-            <a href="#" id="forgot-password" class="text-blue-500 hover:text-blue-700 focus:outline-none focus:shadow-outline">¿Olvidó su contraseña?</a>
-        </div>
-        <div id="general-error" class="mt-4 text-center text-red-500 font-semibold" style="display: none;"></div>
+<body>
+    <nav>
+        <button class="menu-button" id="menu-button">Menú</button>
+        <ul id="menu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="administrador.html">Administrador</a></li>
+            <li><a href="candidatos.html">Candidatos</a></li>
+            <li><a href="confirmacion.html">Confirmación</a></li>
+            <li><a href="convocatoria.html">Convocatoria</a></li>
+             <li><a href="iniciodesesion.html">Inicio de Sesión</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Bienvenido al Menú Principal</h1>
+        <p>Selecciona una opción del menú para navegar a la página correspondiente.</p>
     </div>
 
     <script>
-        const loginForm = document.getElementById('login-form');
-        const generalError = document.getElementById('general-error');
-        const forgotPasswordLink = document.getElementById('forgot-password');
+        const menuButton = document.getElementById('menu-button');
+        const menu = document.getElementById('menu');
 
-        function resetErrors() {
-            const errorElements = document.querySelectorAll('.text-red-500');
-            errorElements.forEach(errorElement => {
-                errorElement.style.display = 'none';
-            });
-            generalError.style.display = 'none';
-        }
-
-        loginForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            resetErrors();
-
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            let hasErrors = false;
-
-            if (!email) {
-                document.getElementById('login-email-error').textContent = 'El correo electrónico es requerido';
-                document.getElementById('login-email-error').style.display = 'block';
-                hasErrors = true;
-            } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-                document.getElementById('login-email-error').textContent = 'Ingrese un correo electrónico válido';
-                document.getElementById('login-email-error').style.display = 'block';
-                hasErrors = true;
-            }
-
-            if (!password) {
-                document.getElementById('login-password-error').textContent = 'La contraseña es requerida';
-                document.getElementById('login-password-error').style.display = 'block';
-                hasErrors = true;
-            }
-
-            if (hasErrors) {
-                return;
-            }
-
-            generalError.textContent = 'Inicio de sesión exitoso (simulado)';
-            generalError.style.display = 'block';
-            // Aquí iría la lógica real de inicio de sesión (llamada a API, etc.)
+        menuButton.addEventListener('click', () => {
+            menu.classList.toggle('show');
         });
 
-        forgotPasswordLink.addEventListener('click', (event) => {
-            event.preventDefault();
-            alert('Funcionalidad de recuperación de contraseña no implementada (simulado)');
+        document.addEventListener('click', (event) => {
+            if (!menu.contains(event.target) && !menuButton.contains(event.target)) {
+                menu.classList.remove('show');
+            }
         });
     </script>
 </body>
