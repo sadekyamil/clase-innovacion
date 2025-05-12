@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Voto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        .confirmation-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #667885;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .candidate-card {
+            display: flex;
+            flex-direction: column; /* Cambia la dirección del flex a columna */
+            align-items: center; /* Centra los elementos horizontalmente */
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .candidate-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-right: 0; /* Elimina el margen derecho */
+            margin-bottom: 10px; /* Añade margen inferior para separar la imagen del nombre */
+            object-fit: cover;
+            
+        }
+        .candidate-info {
+            flex: 1;
+            text-align: center; /* Centra el texto dentro del contenedor */
+        }
+        .candidate-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            align-items: center;
+        }
+        .confirm-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .confirm-button:hover {
+            background-color: #45a049;
+        }
+        .cancel-button {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .cancel-button:hover {
+            background-color: #c83131;
+        }
+        .cancel-button a {
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-box">
+        <h2>Confirmar tu voto</h2>
+        <div class="candidate-card">
+            <img src="https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Foto del Candidato" class="candidate-image">
+            <div class="candidate-info">
+                <p class="candidate-name">Candidato 1</p>
+            </div>
+        </div>
+        <p style="color: #c0392b; font-weight: 600;">¡Atención! Una vez que confirmes tu voto, no podrás modificar ni revertir tu elección.</p>
+        <div class="button-container">
+            <button class="cancel-button"><a href="https://deldot.gov/dashboard/">Cancelar mi voto</a></button>
+            <button class="confirm-button">Confirmar mi voto</button>
+        </div>
+    </div>
+    <script>
+        // Aquí podrías agregar lógica JavaScript para manejar la confirmación del voto
+        const confirmButton = document.querySelector('.confirm-button');
+        confirmButton.addEventListener('click', () => {
+            alert('Tu voto ha sido registrado.');
+            // Aquí podrías redirigir a una página de agradecimiento o similar
+        });
+    </script>
+</body>
+</html>
