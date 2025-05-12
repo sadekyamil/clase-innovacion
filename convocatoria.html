@@ -11,10 +11,22 @@
             font-family: 'Inter', sans-serif;
         }
         .convocatoria-card {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-image: url('https://plus.unsplash.com/premium_photo-1705317716028-ceaa9f2d1786?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDI3fHx8ZW58MHx8fHx8'); /* Usar la imagen proporcionada */
+            /* Eliminamos las propiedades de background-image */
+            background-color: #f0f0f0; /* Establecemos un color de fondo gris claro */
+            width: 90vw; /* Ancho del 90% del viewport width */
+            height: 30vh; /* Alto del 30% del viewport height */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+            margin-bottom: 20px; /* Añadimos margen inferior para separar las tarjetas */
+        }
+        .convocatoria-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
         .modal {
             display: none;
@@ -177,47 +189,35 @@
 </head>
 <body class="bg-gray-100 p-6">
     <h1 class="text-3xl font-semibold text-center text-blue-700 mb-8">Convocatorias de Votación</h1>
-
-    <div class="grid grid-cols-1 gap-6">
+    <div class="flex flex-wrap justify-center gap-6">
         <div class="convocatoria-card">
-            <div class="imagen-convocatoria"></div>
-            <div class="contenido-convocatoria">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir X</h2>
-                <p class="text-gray-700 mb-2">Descripción: Elección de representantes para la junta directiva.</p>
-                <p class="text-gray-700 mb-2">Fecha de inicio: 20 de julio de 2024</p>
-                <p class="text-gray-700 mb-4">Fecha de fin: 30 de julio de 2024</p>
-                 <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-red-500">Votación Pendiente</span></span>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Votar</button>
-                </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir X</h2>
+            <p class="text-gray-700 mb-2">Descripción: Elección de representantes para la junta directiva.</p>
+            <p class="text-gray-700 mb-2">Fecha de inicio: 20 de julio de 2024</p>
+            <p class="text-gray-700 mb-4">Fecha de fin: 30 de julio de 2024</p>
+            <div class="mt-4 flex justify-between items-center">
+                <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-red-500">Votación Pendiente</span></span>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Votar</button>
             </div>
         </div>
-
         <div class="convocatoria-card">
-            <div class="imagen-convocatoria"></div>
-            <div class="contenido-convocatoria">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir Z</h2>
-                <p class="text-gray-700 mb-2">Descripción: Votación para aprobar el presupuesto anual.</p>
-                <p class="text-gray-700 mb-2">Fecha de inicio: 1 de agosto de 2024</p>
-                <p class="text-gray-700 mb-4">Fecha de fin: 10 de agosto de 2024</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-yellow-500">Votación Realizada</span></span>
-                    <button class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="mostrarMiVoto()">Ver mi voto</button>
-                </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir Z</h2>
+            <p class="text-gray-700 mb-2">Descripción: Votación para aprobar el presupuesto anual.</p>
+            <p class="text-gray-700 mb-2">Fecha de inicio: 1 de agosto de 2024</p>
+            <p class="text-gray-700 mb-4">Fecha de fin: 10 de agosto de 2024</p>
+            <div class="mt-4 flex justify-between items-center">
+                <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-yellow-500">Votación Realizada</span></span>
+                <button class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="mostrarMiVoto()">Ver mi voto</button>
             </div>
         </div>
-
         <div class="convocatoria-card">
-            <div class="imagen-convocatoria"></div>
-            <div class="contenido-convocatoria">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir W</h2>
-                <p class="text-gray-700 mb-2">Descripción: Elección de representantes estudiantiles.</p>
-                <p class="text-gray-700 mb-2">Fecha de inicio: 15 de agosto de 2024</p>
-                <p class="text-gray-700 mb-4">Fecha de fin: 25 de agosto de 2024</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-green-500">Votación Cerrada</span></span>
-                    <button class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="mostrarResultados()">Ver Resultados</button>
-                </div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir W</h2>
+            <p class="text-gray-700 mb-2">Descripción: Elección de representantes estudiantiles.</p>
+            <p class="text-gray-700 mb-2">Fecha de inicio: 15 de agosto de 2024</p>
+            <p class="text-gray-700 mb-4">Fecha de fin: 25 de agosto de 2024</p>
+            <div class="mt-4 flex justify-between items-center">
+                <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-green-500">Votación Cerrada</span></span>
+                <button class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="mostrarResultados()">Ver Resultados</button>
             </div>
         </div>
     </div>
