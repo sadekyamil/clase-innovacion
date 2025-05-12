@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Votaciones - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <style>
+        /* Estilos adicionales para hacerlo más bonito */
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1f2937; /* Tailwind gray-800 */
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            border: 1px solid #d1d5db; /* Tailwind gray-300 */
+            font-size: 1rem;
+            line-height: 1.5rem; /* Tailwind leading-relaxed */
+            transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
+        }
+        .form-control:focus {
+            border-color: #3b82f6; /* Tailwind blue-500 */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* Tailwind blue-500 with opacity */
+        }
+        .btn-primary {
+            background-color: #3b82f6; /* Tailwind blue-500 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            font-size: 1rem;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb; /* Tailwind blue-700 */
+        }
+        .btn-secondary {
+            background-color: #e5e7eb; /* Tailwind gray-200 */
+            color: #374151; /* Tailwind gray-700 */
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            border: none;
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db; /* Tailwind gray-300 */
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        .alert-success {
+            background-color: #f0fdf4; /* Tailwind green-100 */
+            color: #15803d; /* Tailwind green-800 */
+            border: 1px solid #16a34a; /* Tailwind green-700 */
+        }
+        .alert-danger {
+            background-color: #fef2f2; /* Tailwind red-100 */
+            color: #b91c1c; /* Tailwind red-800 */
+            border: 1px solid #dc2626; /* Tailwind red-700 */
+        }
+
+        .table-auto {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .table-auto thead th {
+            background-color: #f9fafb; /* Tailwind gray-50 */
+            color: #374151; /* Tailwind gray-700 */
+            padding: 0.75rem;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 2px solid #d1d5db; /* Tailwind gray-300 */
+        }
+        .table-auto tbody td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb; /* Tailwind gray-200 */
+        }
+        .table-auto tbody tr:hover {
+            background-color: #f5f5f5; /* Tailwind gray-100 */
+        }
+        .text-left {
+            text-align: left;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .font-semibold {
+            font-weight: 600;
+        }
+
+        /* Estilos para el modal */
+        .modal {
+            display: none; /* Inicialmente oculto */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5); /* Fondo oscuro semi-transparente */
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 0.5rem; /* Tailwind rounded-md */
+            width: 90%;
+            max-width: 600px; /* Ancho máximo */
+            position: relative; /* Para posicionar el botón de cerrar */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e5e7eb; /* Tailwind gray-200 */
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem; /* Tailwind text-2xl */
+            font-weight: 600;
+            color: #1f2937; /* Tailwind gray-800 */
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.25rem; /* Tailwind text-xl */
+            cursor: pointer;
+            color: #6b7280; /* Tailwind gray-500 */
+            transition: color 0.2s ease-in-out;
+            border: none;
+            background: none;
+            padding: 0;
+        }
+        .close-button:hover {
+            color: #374151; /* Tailwind gray-700 */
+        }
+
+        /* Estilos para el collapsible */
+        .collapsible {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 0.75rem;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1rem;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            transition: background-color 0.2s ease-in-out;
+            margin-bottom: 0.5rem;
+        }
+
+        .collapsible:hover {
+            background-color: #ccc;
+        }
+
+        .collapsible.active {
+            background-color: #ccc;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: #f1f1f1;
+            border-radius: 0.375rem; /* Tailwind rounded-md */
+            margin-bottom: 1rem;
+        }
+
+        .collapsible-content p {
+            margin: 1rem;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 font-sans antialiased">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Sistema de Votaciones</h1>
+
+        <div id="alert-container" class="mb-6">
+            </div>
+
+        <div class="card">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold text-gray-800">Convocatorias de Votación</h2>
+                <button id="crear-convocatoria-btn" class="btn-primary">Crear Convocatoria</button>
+            </div>
+            <table id="convocatorias-table" class="table-auto">
+                <thead>
+                    <tr>
+                        <th class="text-left">Título</th>
+                        <th class="text-left">Descripción</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="detalles-convocatoria-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="detalles-modal-title">Detalles de la Convocatoria</h2>
+                <button id="cerrar-detalles-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body" id="detalles-modal-body">
+                </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+
+    <div id="resultados-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="resultados-modal-title">Resultados de la Votación</h2>
+                <button id="cerrar-resultados-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body" id="resultados-modal-body">
+                </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+
+    <div id="crear-convocatoria-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Crear Nueva Convocatoria</h2>
+                <button id="cerrar-modal-btn" class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="form-crear-convocatoria">
+                    <div class="form-group">
+                        <label for="titulo">Título de la Votación:</label>
+                        <input type="text" id="titulo" name="titulo" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción:</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha de Inicio:</label>
+                        <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_fin">Fecha de Fin:</label>
+                        <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destinatarios">Destinatarios (correos electrónicos, separados por comas):</label>
+                        <textarea id="destinatarios" name="destinatarios" class="form-control" rows="3" placeholder="ejemplo1@dominio.com, ejemplo2@dominio.com"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="opciones">Candidatos a Elección (separados por comas):</label>
+                        <textarea id="opciones" name="opciones" class="form-control" rows="3" required placeholder="Opción 1, Opción 2, Opción 3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="guardar-convocatoria-btn" class="btn-primary">Guardar</button>
+                <button id="cancelar-modal-btn" class="btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Obtener elementos del DOM
+        const crearConvocatoriaBtn = document.getElementById('crear-convocatoria-btn');
+        const crearConvocatoriaModal = document.getElementById('crear-convocatoria-modal');
+        const cerrarModalBtn = document.getElementById('cerrar-modal-btn');
+        const cancelarModalBtn = document.getElementById('cancelar-modal-btn');
+        const guardarConvocatoriaBtn = document.getElementById('guardar-convocatoria-btn');
+        const formCrearConvocatoria = document.getElementById('form-crear-convocatoria');
+        const convocatoriasTable = document.getElementById('convocatorias-table').getElementsByTagName('tbody')[0];
+        const alertContainer = document.getElementById('alert-container');
+
+        // Obtener elementos del modal de detalles
+        const detallesModal = document.getElementById('detalles-convocatoria-modal');
+        const cerrarDetallesModalBtn = document.getElementById('cerrar-detalles-modal-btn');
+        const detallesModalTitle = document.getElementById('detalles-modal-title');
+        const detallesModalBody = document.getElementById('detalles-modal-body');
+
+        // Obtener elementos del modal de resultados
+        const resultadosModal = document.getElementById('resultados-modal');
+        const cerrarResultadosModalBtn = document.getElementById('cerrar-resultados-modal-btn');
+        const resultadosModalTitle = document.getElementById('resultados-modal-title');
+        const resultadosModalBody = document.getElementById('resultados-modal-body');
+
+        // Variables para almacenar las convocatorias
+        let convocatorias = [];
+
+        // Función para mostrar alertas
+        function mostrarAlerta(mensaje, tipo = 'success') {
+            const alertaDiv = document.createElement('div');
+            alertaDiv.className = `alert alert-${tipo}`;
+            alertaDiv.textContent = mensaje;
+            alertContainer.appendChild(alertaDiv);
+
+            // Eliminar la alerta después de 5 segundos
+            setTimeout(() => {
+                alertaDiv.remove();
+            }, 5000);
+        }
+
+        // Función para abrir el modal
+        function abrirModal() {
+            crearConvocatoriaModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Evitar scroll en el body
+        }
+
+        // Función para cerrar el modal
+        function cerrarModal() {
+            crearConvocatoriaModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaurar el scroll del body
+            formCrearConvocatoria.reset(); // Limpiar el formulario
+        }
+
+        // Función para formatear la fecha
+        function formatearFecha(fechaString) {
+            const fecha = new Date(fechaString);
+            return fecha.toLocaleDateString('es-CL', { // Formato chileno dd/mm/yyyy
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        // Función para obtener el estado de la convocatoria
+        function obtenerEstadoConvocatoria(fechaInicio, fechaFin) {
+            const ahora = new Date();
+            const inicio = new Date(fechaInicio);
+            const fin = new Date(fechaFin);
+
+            if (ahora < inicio) {
+                return 'Programada';
+            } else if (ahora > fin) {
+                return 'Finalizada';
+            } else {
+                return 'En Curso';
+            }
+        }
+
+        // Función para renderizar la tabla de convocatorias
+        function renderizarConvocatorias() {
+            convocatoriasTable.innerHTML = ''; // Limpiar la tabla
+            convocatorias.forEach(convocatoria => {
+                const estado = obtenerEstadoConvocatoria(convocatoria.fecha_inicio, convocatoria.fecha_fin);
+                const row = convocatoriasTable.insertRow();
+                const tituloCell = row.insertCell();
+                const descripcionCell = row.insertCell();
+                const estadoCell = row.insertCell();
+                const accionesCell = row.insertCell();
+
+                tituloCell.textContent = convocatoria.titulo;
+                descripcionCell.textContent = convocatoria.descripcion;
+                estadoCell.textContent = estado;
+                estadoCell.classList.add('text-center'); // Centrar el texto
+
+                // Agregar botón para ver detalles (puedes personalizar esto)
+                const detallesBtn = document.createElement('button');
+                detallesBtn.textContent = 'Ver Detalles';
+                detallesBtn.className = 'btn-primary btn-sm'; // Clases de Tailwind
+                detallesBtn.addEventListener('click', () => {
+                    mostrarDetallesConvocatoria(convocatoria);
+                });
+                accionesCell.appendChild(detallesBtn);
+                accionesCell.classList.add('text-center');
+
+                // Agregar botón para ver resultados
+                const resultadosBtn = document.createElement('button');
+                resultadosBtn.textContent = 'Ver Resultados';
+                resultadosBtn.className = 'btn-secondary btn-sm ml-2'; // Clases de Tailwind con margen
+                resultadosBtn.addEventListener('click', () => {
+                    mostrarResultados(convocatoria);
+                });
+                accionesCell.appendChild(resultadosBtn);
+            });
+        }
+
+        // Función para cargar las convocatorias desde localStorage
+        function cargarConvocatorias() {
+            const convocatoriasGuardadas = localStorage.getItem('convocatorias');
+            if (convocatoriasGuardadas) {
+                convocatorias = JSON.parse(convocatoriasGuardadas);
+            }
+        }
+
+        // Función para guardar las convocatorias en localStorage
+        function guardarConvocatorias() {
+            localStorage.setItem('convocatorias', JSON.stringify(convocatorias));
+        }
+
+        // Función para mostrar los detalles de la convocatoria en un modal
+        function mostrarDetallesConvocatoria(convocatoria) {
+            detallesModalTitle.textContent = `Detalles de: ${convocatoria.titulo}`;
+            detallesModalBody.innerHTML = `
+                <p><strong>Descripción:</strong> ${convocatoria.descripcion}</p>
+                <p><strong>Fecha de Inicio:</strong> ${formatearFecha(convocatoria.fecha_inicio)}</p>
+                <p><strong>Fecha de Fin:</strong> ${formatearFecha(convocatoria.fecha_fin)}</p>
+                <p><strong>Estado:</strong> ${obtenerEstadoConvocatoria(convocatoria.fecha_inicio, convocatoria.fecha_fin)}</p>
+                <button class="collapsible">Destinatarios:</button>
+                <div class="collapsible-content">
+                    <p>${convocatoria.destinatarios.join(', ')}</p>
+                </div>
+                <p><strong>Candidatos a Elección:</strong> ${convocatoria.opciones.join(', ')}</p>
+            `;
+            detallesModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+            // Agregar funcionalidad de despliegue al botón "Destinatarios"
+            const coll = document.querySelector(".collapsible");
+            coll.addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        }
+
+        // Función para mostrar los resultados de la votación en un modal
+        function mostrarResultados(convocatoria) {
+            resultadosModalTitle.textContent = `Resultados de: ${convocatoria.titulo}`;
+            resultadosModalBody.innerHTML = '<p>Cargando resultados...</p>'; // Mensaje inicial
+
+            // Simular el cálculo de resultados (reemplazar con lógica real)
+            setTimeout(() => {
+                const resultados = {};
+                let totalVotos = 0;
+
+                // Inicializar el conteo de votos para cada opción
+                convocatoria.opciones.forEach(opcion => {
+                    resultados[opcion] = 0;
+                });
+
+                // Contar los votos
+                for (const votante in convocatoria.votos) {
+                    const voto = convocatoria.votos[votante];
+                    if (Array.isArray(voto)) { // Si se permiten múltiples opciones
+                        voto.forEach(opcion => {
+                            if (resultados[opcion]) {
+                                resultados[opcion]++;
+                                totalVotos++;
+                            }
+                        });
+                    } else { // Si solo se permite una opción
+                        if (resultados[voto]) {
+                            resultados[voto]++;
+                            totalVotos++;
+                        }
+                    }
+                }
+
+                // Generar el contenido del modal
+                let resultadosHTML = '<ul>';
+                for (const opcion in resultados) {
+                    resultadosHTML += `<li><strong>${opcion}:</strong> ${resultados[opcion]} votos</li>`;
+                }
+                resultadosHTML += `</ul><p><strong>Total de votos:</strong> ${totalVotos}</p>`;
+                resultadosModalBody.innerHTML = resultadosHTML;
+                resultadosModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }, 1000); // Simulación de 1 segundo de espera
+        }
+
+        // Event listeners
+        crearConvocatoriaBtn.addEventListener('click', abrirModal);
+        cerrarModalBtn.addEventListener('click', cerrarModal);
+        cancelarModalBtn.addEventListener('click', cerrarModal);
+        cerrarDetallesModalBtn.addEventListener('click', () => {
+            detallesModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        cerrarResultadosModalBtn.addEventListener('click', () => {
+            resultadosModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        guardarConvocatoriaBtn.addEventListener('click', () => {
+            const titulo = document.getElementById('titulo').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const fechaInicio = document.getElementById('fecha_inicio').value;
+            const fechaFin = document.getElementById('fecha_fin').value;
+            const destinatarios = document.getElementById('destinatarios').value.split(',').map(email => email.trim());
+            const opciones = document.getElementById('opciones').value.split(',').map(opcion => opcion.trim());
+
+            if (!titulo || !descripcion || !fechaInicio || !fechaFin || !opciones.length) {
+                mostrarAlerta('Por favor, complete todos los campos obligatorios.', 'danger');
+                return;
+            }
+
+            if (new Date(fechaInicio) >= new Date(fechaFin)) {
+                mostrarAlerta('La fecha de inicio debe ser anterior a la fecha de fin.', 'danger');
+                return;
+            }
+
+             if (opciones.length < 2) {
+                mostrarAlerta('Debe ingresar al menos dos opciones para la votación.', 'danger');
+                return;
+            }
+
+            const nuevaConvocatoria = {
+                titulo,
+                descripcion,
+                fecha_inicio: fechaInicio,
+                fecha_fin: fechaFin,
+                destinatarios,
+                opciones, // Guardar las opciones
+                votos: {} // Inicializar un objeto para almacenar los votos
+            };
+
+            convocatorias.push(nuevaConvocatoria);
+            guardarConvocatorias();
+            renderizarConvocatorias();
+            cerrarModal();
+            mostrarAlerta('Convocatoria creada exitosamente.', 'success');
+        });
+
+        // Cargar las convocatorias al cargar la página
+        cargarConvocatorias();
+        renderizarConvocatorias();
+    </script>
+</body>
+</html>
