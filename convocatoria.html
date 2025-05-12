@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Votaciones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .convocatoria-card {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 8px;
+            position: relative;
+        }
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+        }
+        .ganador {
+            background-color: #16a34a;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        function mostrarMiVoto() {
+            // Datos de ejemplo del voto del usuario (reemplazar con datos reales)
+            const voto = {
+                candidato: "Candidato 3",
+                imagen: "https://images.unsplash.com/photo-1569285645462-a3f9c6332d56?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                descripcion: {
+                    cargo: "Presidente",
+                    partido: "Partido X",
+                    experiencia: "Amplia experiencia en gestión pública.",
+                    propuestas: "Desarrollo económico, educación de calidad, seguridad ciudadana."
+                }
+            };
+
+            // Crear el contenido del modal
+            let modalContent = `
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2 class="text-xl font-semibold mb-4">Tú has votado a:</h2>
+                    <div class="flex flex-col items-center gap-4 mb-4">
+                        <img src="${voto.imagen}" alt="Imagen del candidato ${voto.candidato}" class="w-20 h-20 rounded-full">
+                        <h3 class="text-lg font-semibold text-center">${voto.candidato}</h3>
+                    </div>
+                    <p class="text-gray-700 mb-2"><strong>Cargo:</strong> ${voto.descripcion.cargo}</p>
+                    <p class="text-gray-700 mb-2"><strong>Partido:</strong> ${voto.descripcion.partido}</p>
+                    <p class="text-gray-700 mb-2"><strong>Experiencia:</strong> ${voto.descripcion.experiencia}</p>
+                    <p class="text-gray-700 mb-4"><strong>Propuestas:</strong> ${voto.descripcion.propuestas}</p>
+                    <div class="flex justify-center">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Ver más detalles</button>
+                    </div>
+                </div>
+            `;
+
+            // Agregar el modal al body
+            let modalDiv = document.createElement('div');
+            modalDiv.className = 'modal';
+            modalDiv.innerHTML = modalContent;
+            document.body.appendChild(modalDiv);
+
+            // Mostrar el modal
+            const modal = document.querySelector('.modal');
+            modal.style.display = "block";
+
+            // Cerrar el modal al hacer clic en la x
+            const closeButton = document.querySelector('.close-button');
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+                document.body.removeChild(modal); // Eliminar el modal del DOM
+            };
+
+            // Cerrar el modal al hacer clic fuera del contenido
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+
+        function mostrarResultados() {
+            // Datos de ejemplo (reemplazar con datos reales de la votación)
+            const resultados = {
+                candidato1: 120,
+                candidato2: 85,
+                candidato3: 210
+            };
+            const totalVotos = resultados.candidato1 + resultados.candidato2 + resultados.candidato3;
+
+            // Determinar el ganador
+            let ganador = '';
+            let maxVotos = 0;
+            for (const candidato in resultados) {
+                if (resultados[candidato] > maxVotos) {
+                    maxVotos = resultados[candidato];
+                    ganador = candidato;
+                }
+            }
+
+            // Crear el contenido del modal
+            let modalContent = `
+                <div class="modal-content">
+                    <span class="close-button">&times;</span>
+                    <h2 class="text-xl font-semibold mb-4">Resultados de la Votación</h2>
+                    <p class="${ganador === 'candidato1' ? 'ganador' : ''}">Candidato 1: ${resultados.candidato1} votos</p>
+                    <p class="${ganador === 'candidato2' ? 'ganador' : ''}">Candidato 2: ${resultados.candidato2} votos</p>
+                    <p class="${ganador === 'candidato3' ? 'ganador' : ''}">Candidato 3: ${resultados.candidato3} votos</p>
+                    <p class="text-lg font-semibold text-blue-600">Total de votos: ${totalVotos}</p>
+                </div>
+            `;
+
+            // Agregar el modal al body
+            let modalDiv = document.createElement('div');
+            modalDiv.className = 'modal';
+            modalDiv.innerHTML = modalContent;
+            document.body.appendChild(modalDiv);
+
+            // Mostrar el modal
+            const modal = document.querySelector('.modal');
+            modal.style.display = "block";
+
+            // Cerrar el modal al hacer clic en la x
+            const closeButton = document.querySelector('.close-button');
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+                document.body.removeChild(modal); // Eliminar el modal del DOM
+            };
+
+            // Cerrar el modal al hacer clic fuera del contenido
+            window.onclick = function(event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    document.body.removeChild(modal);
+                }
+            };
+        }
+    </script>
+</head>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-semibold text-center text-blue-700 mb-8">Convocatorias de Votación</h1>
+
+    <div class="grid grid-cols-1 gap-6">
+        <div class="convocatoria-card bg-image rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300 flex flex-col justify-between" style="background-image: url('https://images.unsplash.com/photo-1746469410708-493e86266c05?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+            <div class="bg-white/80 backdrop-blur-md rounded-lg p-4 self-end w-1/2">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir X</h2>
+                <p class="text-gray-700 mb-2">Descripción: Elección de representantes para la junta directiva.</p>
+                <p class="text-gray-700 mb-2">Fecha de inicio: 20 de julio de 2024</p>
+                <p class="text-gray-700 mb-4">Fecha de fin: 30 de julio de 2024</p>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+                <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-red-500">Votación Pendiente</span></span>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Votar</button>
+            </div>
+        </div>
+
+        <div class="convocatoria-card bg-image rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300 flex flex-col justify-between" style="background-image: url('https://images.unsplash.com/photo-1746469410708-493e86266c05?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+            <div class="bg-white/80 backdrop-blur-md rounded-lg p-4 self-end w-1/2">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir Z</h2>
+                <p class="text-gray-700 mb-2">Descripción: Votación para aprobar el presupuesto anual.</p>
+                <p class="text-gray-700 mb-2">Fecha de inicio: 1 de agosto de 2024</p>
+                <p class="text-gray-700 mb-4">Fecha de fin: 10 de agosto de 2024</p>
+            </div>
+             <div class="mt-4 flex justify-between items-center">
+                <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-yellow-500">Votación Realizada</span></span>
+                <button class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="mostrarMiVoto()">Ver mi voto</button>
+            </div>
+        </div>
+
+        <div class="convocatoria-card bg-image rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300 flex flex-col justify-between" style="background-image: url('https://images.unsplash.com/photo-1746469410708-493e86266c05?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+            <div class="bg-white/80 backdrop-blur-md rounded-lg p-4 self-end w-1/2">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Convocatoria para Elegir W</h2>
+                <p class="text-gray-700 mb-2">Descripción: Elección de representantes estudiantiles.</p>
+                <p class="text-gray-700 mb-2">Fecha de inicio: 15 de agosto de 2024</p>
+                <p class="text-gray-700 mb-4">Fecha de fin: 25 de agosto de 2024</p>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+                <span class="text-sm text-gray-500">Estado: <span class="font-semibold text-green-500">Votación Cerrada</span></span>
+                <button class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="mostrarResultados()">Ver Resultados</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
