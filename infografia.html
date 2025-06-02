@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VotaFácil: Infografía Interactiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Paleta de colores: Inspirada en "Brilliant Blues" y "Energetic & Playful" de las referencias */
+        /* Primary Blue (oscuro): #1A237E */
+        /* Secondary Blue (claro): #E3F2FD */
+        /* Accent Green: #4CAF50 */
+        /* Text Gray: #4A4A4A */
+        /* Background Light Gray: #F5F5F5 */
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F5F5F5; /* Fondo más claro */
+            color: #4A4A4A; /* Color de texto general */
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem; /* Bordes más redondeados */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra más pronunciada */
+            padding: 2rem; /* Más padding */
+            margin-bottom: 2.5rem; /* Más margen inferior */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0e0e0; /* Borde sutil */
+        }
+        .card:hover {
+            transform: translateY(-8px); /* Elevación al pasar el mouse */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+        .icon {
+            font-size: 3rem; /* Iconos más grandes */
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+        .flow-line::after {
+            content: '';
+            display: block;
+            width: 3px; /* Línea más gruesa */
+            height: 2.5rem; /* Más alta */
+            background-color: #1A237E; /* Color de línea más oscuro */
+            margin: 1.5rem auto; /* Más margen */
+            border-radius: 1.5px;
+        }
+        .flow-step:last-child .flow-line::after {
+            display: none;
+        }
+        .mockup {
+            border: 2px solid #CFD8DC; /* Borde más suave */
+            border-radius: 0.75rem; /* Bordes redondeados */
+            background-color: #ECEFF1; /* Fondo más claro */
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            height: 140px; /* Altura ligeramente mayor */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.75rem; /* Más espacio entre elementos */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); /* Sombra interna sutil */
+        }
+        .mockup-bar {
+            width: 100%;
+            height: 0.75rem;
+            background-color: #B0BEC5; /* Color de barra general */
+            border-radius: 0.25rem;
+        }
+        .mockup-button {
+            width: 60%;
+            height: 1.5rem;
+            background-color: #4CAF50; /* Botón verde vibrante */
+            border-radius: 0.5rem;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; /* Altura base */
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px; /* Altura en desktop */
+            }
+        }
+        h1, h2, h3 {
+            color: #1A237E; /* Azul oscuro para títulos */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto p-4 md:p-10 max-w-6xl">
+
+        <header class="text-center mb-16 pt-8">
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-4 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-indigo-900">VotaFácil</h1>
+            <p class="text-2xl text-gray-600 font-medium">Decisiones Claras, Participación Segura</p>
+        </header>
+
+        <section id="que-es" class="card text-center">
+            <div class="icon mb-4">🗳️</div>
+            <h2 class="text-3xl font-bold mb-4">¿Qué es VotaFácil?</h2>
+            <p class="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                VotaFácil es una aplicación web intuitiva y segura diseñada para simplificar y modernizar los procesos de votación. Permite a los administradores crear convocatorias personalizadas y a los usuarios emitir su voto de manera fácil y confidencial, garantizando la integridad de cada elección.
+            </p>
+        </section>
+
+        <section id="problema" class="card text-center bg-red-50 border border-red-200">
+            <div class="icon mb-4">📉</div>
+            <h2 class="text-3xl font-bold mb-4 text-red-700">El Problema que Solucionamos</h2>
+            <p class="text-lg text-red-600 max-w-3xl mx-auto leading-relaxed">
+                En la era digital, los procesos de votación manuales son a menudo lentos, costosos y propensos a errores, dificultando la participación y la transparencia. VotaFácil surge como la solución a estas ineficiencias, transformando la experiencia de votación.
+            </p>
+        </section>
+
+        <section id="solucion" class="text-center mb-12">
+            <h2 class="text-4xl font-bold mb-12">Nuestra Solución: ¡Así Funciona!</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <div class="card flow-step flex flex-col items-center">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-blue-700 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">1</div>
+                        <h3 class="font-bold text-xl mb-3 text-blue-800">Crea la Convocatoria</h3>
+                    </div>
+                    <p class="text-base text-gray-600 text-center flex-grow">El administrador accede a un panel exclusivo, donde define el título, descripción, fechas y las opciones o candidatos de la votación, de forma rápida y guiada.</p>
+                    <div class="mockup w-full flex-grow">
+                        <div class="mockup-bar w-full h-4 bg-blue-200"></div>
+                        <div class="mockup-bar w-full h-8 bg-blue-300"></div>
+                        <input type="text" id="descriptionPrompt" placeholder="Ej: Elección de directiva, Presupuesto anual..." class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-blue-500 focus:border-blue-500 mb-2">
+                        <button id="generateDescriptionBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-300 text-sm">Generar Descripción ✨</button>
+                        <div id="loadingIndicator" class="text-center mt-2 text-blue-600 animate-pulse hidden text-sm">Generando...</div>
+                        <div id="generatedDescriptionOutput" class="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-md text-gray-800 text-left text-sm hidden overflow-auto max-h-24"></div>
+                    </div>
+                    <div class="flow-line"></div>
+                </div>
+
+                <div class="card flow-step flex flex-col items-center">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-blue-700 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">2</div>
+                        <h3 class="font-bold text-xl mb-3 text-blue-800">Invita a los Usuarios</h3>
+                    </div>
+                    <p class="text-base text-gray-600 text-center flex-grow">Los usuarios autorizados reciben una invitación y acceden a la plataforma de forma segura con sus credenciales, garantizando un acceso controlado.</p>
+                     <div class="mockup w-full">
+                        <div class="mockup-bar w-full h-4 bg-green-200"></div>
+                        <div class="mockup-bar w-full h-4 bg-green-300"></div>
+                        <div class="mockup-button w-full bg-green-500"></div>
+                    </div>
+                    <div class="flow-line"></div>
+                </div>
+
+                <div class="card flow-step flex flex-col items-center">
+                    <div class="flex flex-col items-center">
+                        <div class="bg-blue-700 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">3</div>
+                        <h3 class="font-bold text-xl mb-3 text-blue-800">Vota Fácil y Seguro</h3>
+                    </div>
+                    <p class="text-base text-gray-600 text-center flex-grow">Los usuarios visualizan las convocatorias activas, revisan las opciones y emiten su voto con un solo clic. ¡Tu elección es confidencial y segura!</p>
+                     <div class="mockup w-full">
+                        <div class="mockup-bar w-full h-6 bg-gray-300 mb-2"></div>
+                        <div class="mockup-bar w-full h-6 bg-gray-300"></div>
+                        <div class="mockup-button w-1/2 bg-blue-500 self-center"></div>
+                    </div>
+                    <div class="flow-line"></div>
+                </div>
+
+                <div class="card flow-step flex flex-col items-center">
+                    <div class="flex flex-col items-center">
+                         <div class="bg-blue-700 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">4</div>
+                        <h3 class="font-bold text-xl mb-3 text-blue-800">Resultados Transparentes</h3>
+                    </div>
+                    <p class="text-base text-gray-600 text-center flex-grow">Una vez finalizada la convocatoria, los administradores (y según configuración, los usuarios) pueden ver los resultados de forma clara y transparente, facilitando la auditoría.</p>
+                    <div class="mockup p-0 overflow-hidden w-full flex-grow">
+                        <canvas id="resultsChart" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="beneficios" class="mb-12">
+            <h2 class="text-4xl font-bold text-center mb-12">Beneficios Clave</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card flex flex-col items-center text-center">
+                    <div class="icon text-green-600">🔒</div>
+                    <h3 class="font-bold text-xl mb-2">Seguridad Robustas</h3>
+                    <p class="text-gray-600">Acceso controlado, voto único garantizado y encriptación de datos para máxima protección.</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <div class="icon text-green-600">💡</div>
+                    <h3 class="font-bold text-xl mb-2">Facilidad de Uso</h3>
+                    <p class="text-gray-600">Interfaz intuitiva y amigable, diseñada para una experiencia sin fricciones tanto para administradores como para votantes.</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <div class="icon text-green-600">📊</div>
+                    <h3 class="font-bold text-xl mb-2">Administración Centralizada</h3>
+                    <p class="text-gray-600">El administrador gestiona todo el proceso de votación desde un único panel, optimizando tiempo y recursos.</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <div class="icon text-green-600">👁️</div>
+                    <h3 class="font-bold text-xl mb-2">Transparencia Total</h3>
+                    <p class="text-gray-600">Resultados claros, accesibles y auditables, fomentando la confianza en cada votación.</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <div class="icon text-green-600">⚡</div>
+                    <h3 class="font-bold text-xl mb-2">Eficiencia Optimizada</h3>
+                    <p class="text-gray-600">Automatiza procesos, reduciendo significativamente el tiempo y los recursos en comparación con métodos tradicionales.</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <div class="icon text-green-600">🌐</div>
+                    <h3 class="font-bold text-xl mb-2">Accesibilidad Universal</h3>
+                    <p class="text-gray-600">Vota desde cualquier lugar y dispositivo con conexión a internet, ampliando la participación.</p>
+                </div>
+            </div>
+        </section>
+
+         <section id="ideal-para" class="mb-12">
+            <h2 class="text-4xl font-bold text-center mb-12">¿Para Quién es Ideal?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="card text-center flex flex-col items-center">
+                    <div class="icon mb-4">🏘️</div>
+                    <h3 class="font-semibold text-xl text-blue-800">Comunidades y Asociaciones</h3>
+                    <p class="text-gray-600 text-sm mt-2">Ideal para juntas de vecinos, asociaciones civiles y cualquier grupo que necesite tomar decisiones de forma organizada.</p>
+                </div>
+                <div class="card text-center flex flex-col items-center">
+                    <div class="icon mb-4">🏫</div>
+                    <h3 class="font-semibold text-xl text-blue-800">Instituciones Educativas</h3>
+                    <p class="text-gray-600 text-sm mt-2">Perfecto para la elección de delegados, consejos estudiantiles o votaciones internas en universidades y colegios.</p>
+                </div>
+                <div class="card text-center flex flex-col items-center">
+                    <div class="icon mb-4">📈</div>
+                    <h3 class="font-semibold text-xl text-blue-800">Pequeñas y Medianas Empresas</h3>
+                    <p class="text-gray-600 text-sm mt-2">Facilita decisiones internas, votaciones para proyectos o juntas de accionistas de manera eficiente.</p>
+                </div>
+                <div class="card text-center flex flex-col items-center">
+                    <div class="icon mb-4">🤝</div>
+                    <h3 class="font-semibold text-xl text-blue-800">Clubes y Organizaciones Sociales</h3>
+                    <p class="text-gray-600 text-sm mt-2">Optimiza la votación para directivas, eventos o cualquier decisión que involucre a los miembros.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center mt-16 py-8 border-t-2 border-blue-100">
+            <h3 class="text-3xl font-bold text-blue-700 mb-4">¡Moderniza tus elecciones con VotaFácil!</h3>
+            <p class="text-lg text-gray-500">&copy; 2025 VotaFácil. Todos los derechos reservados.</p>
+            <p class="text-sm text-gray-400 mt-2">Visita nuestro sitio para más información.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('resultsChart').getContext('2d');
+            
+            // Función para envolver etiquetas largas
+            function wrapLabel(label, maxCharsPerLine = 16) {
+                if (typeof label !== 'string' || label.length <= maxCharsPerLine) {
+                    return label;
+                }
+                const words = label.split(' ');
+                let lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length <= maxCharsPerLine) {
+                        currentLine += (currentLine === '' ? '' : ' ') + word;
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = word;
+                    }
+                });
+                if (currentLine !== '') {
+                    lines.push(currentLine);
+                }
+                return lines;
+            }
+
+            const resultsChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        wrapLabel('Candidato A: Juan Pérez'),
+                        wrapLabel('Candidato B: María García'),
+                        wrapLabel('Candidato C: Carlos Ruiz'),
+                        wrapLabel('Opción D: Abstención')
+                    ],
+                    datasets: [{
+                        label: 'Votos',
+                        data: [120, 190, 85, 30],
+                        backgroundColor: [
+                            'rgba(26, 35, 126, 0.8)', /* Primary Blue oscuro */
+                            'rgba(76, 175, 80, 0.8)', /* Accent Green */
+                            'rgba(251, 192, 45, 0.8)', /* Amarillo vibrante */
+                            'rgba(144, 164, 174, 0.8)' /* Gris para abstención */
+                        ],
+                        borderColor: [
+                            'rgba(26, 35, 126, 1)',
+                            'rgba(76, 175, 80, 1)',
+                            'rgba(251, 192, 45, 1)',
+                            'rgba(144, 164, 174, 1)'
+                        ],
+                        borderWidth: 1,
+                        borderRadius: 5 /* Bordes redondeados para las barras */
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y', /* Barras horizontales para mejor lectura de etiquetas */
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                display: false /* Ocultar líneas de cuadrícula */
+                            },
+                            ticks: {
+                                color: '#4A4A4A' /* Color de las etiquetas del eje Y */
+                            },
+                            title: {
+                                display: true,
+                                text: 'Opciones de Voto',
+                                color: '#1A237E'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false /* Ocultar líneas de cuadrícula */
+                            },
+                            ticks: {
+                                display: true, /* Mostrar ticks en el eje X */
+                                color: '#4A4A4A'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Número de Votos',
+                                color: '#1A237E'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 35, 126, 0.9)', /* Fondo del tooltip */
+                            titleColor: 'white',
+                            bodyColor: 'white',
+                            borderColor: 'rgba(76, 175, 80, 1)',
+                            borderWidth: 1,
+                            cornerRadius: 5,
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                      return label.join(' ');
+                                    } else {
+                                      return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gemini API Integration
+            const descriptionPromptInput = document.getElementById('descriptionPrompt');
+            const generateDescriptionBtn = document.getElementById('generateDescriptionBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const generatedDescriptionOutput = document.getElementById('generatedDescriptionOutput');
+
+            generateDescriptionBtn.addEventListener('click', async () => {
+                const promptText = descriptionPromptInput.value.trim();
+                if (!promptText) {
+                    generatedDescriptionOutput.textContent = 'Por favor, ingresa un tema o palabras clave para generar la descripción.';
+                    generatedDescriptionOutput.classList.remove('hidden');
+                    return;
+                }
+
+                loadingIndicator.classList.remove('hidden');
+                generatedDescriptionOutput.classList.add('hidden');
+                generatedDescriptionOutput.textContent = '';
+
+                try {
+                    let chatHistory = [];
+                    chatHistory.push({ role: "user", parts: [{ text: `Genera una descripción concisa y atractiva para una convocatoria de votación sobre el siguiente tema o palabras clave: "${promptText}". La descripción debe ser profesional y motivar a la participación. Limítate a un máximo de 100 palabras.` }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = "";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        generatedDescriptionOutput.textContent = text;
+                        generatedDescriptionOutput.classList.remove('hidden');
+                    } else {
+                        generatedDescriptionOutput.textContent = 'No se pudo generar la descripción. Intenta con un tema diferente.';
+                        generatedDescriptionOutput.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Error al llamar a la API de Gemini:', error);
+                    generatedDescriptionOutput.textContent = 'Ocurrió un error al generar la descripción. Por favor, inténtalo de nuevo más tarde.';
+                    generatedDescriptionOutput.classList.remove('hidden');
+                } finally {
+                    loadingIndicator.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
