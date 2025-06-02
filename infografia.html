@@ -127,6 +127,75 @@
             animation: fadeInRight 1s ease-out forwards;
             animation-delay: 0.9s;
         }
+
+        /* Accordion specific styles */
+        .accordion-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+            overflow: hidden; /* Ensures content doesn't spill during transition */
+        }
+        .accordion-header {
+            background-color: #E3F2FD; /* Secondary Blue claro */
+            padding: 1.25rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #1A237E; /* Primary Blue oscuro */
+            transition: background-color 0.3s ease;
+        }
+        .accordion-header:hover {
+            background-color: #BBDEFB; /* Lighter blue on hover */
+        }
+        .accordion-content {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: white;
+        }
+        .accordion-content.open {
+            max-height: 500px; /* Adjust as needed for content height */
+            padding: 1.25rem 2rem;
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* New Toggle Button Styles */
+        .toggle-button-container {
+            background-color: #E3F2FD; /* Light blue background for the container */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); /* Subtle inner shadow */
+        }
+
+        .toggle-slider {
+            background-color: #1A237E; /* Dark blue for the slider */
+            transition: transform 0.3s ease-in-out; /* Smooth sliding animation */
+        }
+
+        .toggle-button {
+            color: #1A237E; /* Dark blue text by default */
+            font-weight: 600;
+            white-space: nowrap; /* Prevent text wrapping */
+            outline: none; /* Remove outline on focus */
+        }
+
+        .toggle-button.active {
+            color: white; /* White text when active */
+        }
+
+        /* Tab content display */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -306,6 +375,299 @@
             </div>
         </section>
 
+        <section id="faq-nuevos-usuarios" class="mb-12">
+            <h2 class="text-4xl font-bold text-center mb-12">FAQ para Nuevos Usuarios (Descubriendo VoxPopuly)</h2>
+            <div class="max-w-3xl mx-auto">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">1. ¿Qué es exactamente VoxPopuly?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">VoxPopuly es una plataforma web diseñada para facilitar y modernizar la manera en que se realizan votaciones y elecciones. Permite a organizaciones de todo tipo crear convocatorias de votación de forma sencilla, y a sus miembros participar de manera segura, transparente y eficiente.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">2. ¿Para qué tipo de organizaciones o situaciones es útil VoxPopuly?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">¡Para muchas! VoxPopuly es ideal para:</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Comunidades y Asociaciones: Juntas de vecinos, asociaciones civiles, clubes sociales.</li>
+                            <li>Instituciones Educativas: Elección de delegados, consejos estudiantiles, votaciones internas.</li>
+                            <li>Pequeñas y Medianas Empresas: Decisiones internas, votaciones para proyectos, juntas de accionistas.</li>
+                            <li>Cualquier grupo que necesite tomar decisiones colectivas de forma organizada y democrática.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">3. ¿Necesito ser un experto en tecnología para usar VoxPopuly?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">¡Para nada! Hemos diseñado VoxPopuly para que sea intuitivo y fácil de usar, tanto para los administradores que crean las votaciones como para los usuarios que emiten su voto. Si puedes navegar por internet y usar un correo electrónico, ¡puedes usar VoxPopuly!</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">4. ¿Es seguro votar a través de VoxPopuly? ¿Mi voto es confidencial?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">La seguridad y la confidencialidad son nuestras máximas prioridades. Utilizamos medidas de seguridad robustas para proteger la integridad del proceso de votación.</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Acceso Controlado: Solo usuarios autorizados pueden participar.</li>
+                            <li>Voto Único: Implementamos mecanismos para asegurar que cada usuario vote solo una vez.</li>
+                            <li>Confidencialidad: El diseño de la plataforma asegura que tu elección personal se mantenga confidencial, según la configuración establecida por el administrador para la convocatoria. Los administradores ven los resultados totales, no cómo votó cada individuo (a menos que la naturaleza de la votación lo requiera y se informe previamente).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">5. ¿Qué ventajas tiene VoxPopuly sobre los métodos de votación tradicionales (papel, mano alzada, emails)?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Eficiencia: Ahorra tiempo y recursos al automatizar el proceso.</li>
+                            <li>Accesibilidad: Permite votar desde cualquier lugar con conexión a internet.</li>
+                            <li>Transparencia: Los resultados pueden ser consultados de forma clara (según configuración).</li>
+                            <li>Seguridad: Reduce el riesgo de errores humanos o manipulaciones.</li>
+                            <li>Participación: Facilita que más personas participen al hacerlo más conveniente.</li>
+                            <li>Organización: Mantiene un registro ordenado de todas las convocatorias y sus resultados.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">6. ¿Cómo puedo empezar a usar VoxPopuly para mi organización?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Es muy sencillo. Si eres quien va a administrar las votaciones, simplemente regístrate en nuestra plataforma. Una vez dentro, tendrás acceso al panel de administración desde donde podrás crear tu primera convocatoria. Si eres un votante, espera la invitación o las instrucciones de tu administrador.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">7. ¿VoxPopuly tiene algún costo?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Actualmente, VoxPopuly ofrece un plan gratuito con funcionalidades básicas para pequeñas organizaciones. También contamos con planes premium con características avanzadas para necesidades mayores. Consulta nuestra sección de 'Planes y Precios' para más detalles.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">8. ¿Puedo probar la plataforma antes de decidirme?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">¡Claro! Puedes registrarte y probar las funcionalidades básicas de forma gratuita para ver si VoxPopuly se ajusta a tus necesidades.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq-clientes-existentes" class="mb-12">
+            <h2 class="text-4xl font-bold text-center mb-12">FAQ para Clientes Existentes (Guía de Uso y Tutoriales)</h2>
+            <div class="toggle-button-container relative flex w-full max-w-sm mx-auto rounded-full bg-blue-100 p-1 mb-8">
+                <div id="toggleSlider" class="toggle-slider absolute h-full rounded-full shadow-md"></div>
+                <button id="adminFaqBtn" class="toggle-button flex-1 text-center py-2 px-4 rounded-full relative z-10 transition-colors duration-300">Soy Administrador</button>
+                <button id="voterFaqBtn" class="toggle-button flex-1 text-center py-2 px-4 rounded-full relative z-10 transition-colors duration-300">Soy Votante</button>
+            </div>
+
+            <div id="adminFaqContent" class="tab-content">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">1. ¿Cómo creo una nueva convocatoria de votación?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Inicia sesión en tu cuenta de VoxPopuly.</p>
+                        <p class="text-gray-700 mt-2">En el panel de administración, busca y haz clic en el botón "Crear Convocatoria" (o similar).</p>
+                        <p class="text-gray-700 mt-2">Completa el formulario con la información requerida:</p>
+                        <ul class="list-disc list-inside text-gray-700 ml-4 mt-1">
+                            <li>Título de la Convocatoria: (Ej: "Elección de Representante Estudiantil 2024")</li>
+                            <li>Descripción: (Ej: "Votación para elegir al nuevo representante del consejo estudiantil para el periodo 2024-2025.")</li>
+                            <li>Fecha de Inicio y Hora de Inicio: ¿Cuándo podrán empezar a votar los usuarios?</li>
+                            <li>Fecha de Fin y Hora de Fin: ¿Hasta cuándo estará abierta la votación?</li>
+                        </ul>
+                        <p class="text-gray-700 mt-2">Añade las Opciones o Candidatos:</p>
+                        <ul class="list-disc list-inside text-gray-700 ml-4 mt-1">
+                            <li>Ingresa el nombre de cada opción o candidato. Puedes añadir tantos como necesites.</li>
+                            <li>(Opcional, si la función existe) Puedes añadir una breve descripción o foto para cada candidato/opción.</li>
+                        </ul>
+                        <p class="text-gray-700 mt-2">Revisa toda la información y haz clic en "Guardar" o "Publicar Convocatoria".</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">2. ¿Puedo editar una convocatoria después de haberla creado?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <ul class="list-disc list-inside text-gray-700">
+                            <li>Antes de que inicie: Sí, generalmente puedes editar todos los detalles de una convocatoria que aún no ha comenzado.</li>
+                            <li>Una vez iniciada: Por motivos de integridad del proceso, algunas ediciones podrían estar restringidas (como cambiar las opciones de voto o las fechas de forma drástica). Recomendamos configurar todo cuidadosamente antes de la fecha de inicio. Si necesitas un cambio crítico, considera comunicarte con los votantes o, en casos extremos, cancelar y crear una nueva convocatoria informando del cambio.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">3. ¿Cómo invito a los usuarios a votar en mi convocatoria?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">(Esto dependerá de tu sistema de gestión de usuarios. Ejemplos:)</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Opción 1 (Lista de correos): "Una vez creada la convocatoria, tendrás una opción para 'Invitar Votantes'. Podrás ingresar una lista de correos electrónicos de las personas habilitadas para votar. Ellos recibirán un email con un enlace único para acceder a la votación."</li>
+                            <li>Opción 2 (Registro previo): "Asegúrate de que los usuarios que deben votar estén registrados en la plataforma. Una vez que la convocatoria esté activa, aparecerá en el panel de los usuarios habilitados."</li>
+                            <li>Opción 3 (Enlace genérico con código): "Puedes compartir un enlace general a la votación junto con un código de acceso único para cada votante, o un código grupal si la convocatoria es más abierta."</li>
+                        </ul>
+                        <p class="text-gray-700 mt-2 font-semibold">Importante: Consulta la documentación específica de tu rol de administrador para el método exacto.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">4. ¿Cómo puedo ver los resultados de una votación?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Ve a tu panel de administración.</p>
+                        <p class="text-gray-700 mt-2">Busca la sección de "Convocatorias" o "Mis Votaciones".</p>
+                        <p class="text-gray-700 mt-2">Selecciona la convocatoria cuyos resultados quieres ver.</p>
+                        <p class="text-gray-700 mt-2">Si la votación ha finalizado, deberías ver una opción como "Ver Resultados" o los resultados se mostrarán directamente. Generalmente se presentan en forma de conteo de votos por opción/candidato y, a veces, con gráficos.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">5. ¿Puedo exportar los resultados de una votación?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">(Si esta función existe) Sí, usualmente encontrarás una opción para "Descargar Resultados" o "Exportar a PDF/CSV" en la página de resultados de la convocatoria. Esto te permitirá tener un registro físico o digital para tus archivos.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">6. ¿Qué pasa si olvido mi contraseña de administrador?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">En la página de inicio de sesión ("Únete a VoxPopuly" o similar), busca un enlace que diga "¿Olvidó su contraseña?" o "Recuperar Contraseña". Haz clic ahí y sigue las instrucciones, que usualmente implican ingresar tu correo electrónico para recibir un enlace de restablecimiento.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">7. ¿Cómo sé si una convocatoria está "Programada", "Activa" o "Cerrada"?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">En tu listado de convocatorias dentro del panel de administración, cada convocatoria mostrará su estado actual.</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Programada: La convocatoria está creada pero la fecha de inicio aún no ha llegado.</li>
+                            <li>Activa/En Curso: La votación está abierta y los usuarios pueden emitir su voto.</li>
+                            <li>Cerrada/Finalizada: La fecha de fin ha pasado o la votación ha sido cerrada manualmente. Ya no se aceptan más votos y los resultados suelen estar disponibles.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="voterFaqContent" class="tab-content">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">1. ¿Cómo sé que estoy invitado a votar en una convocatoria?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Generalmente, recibirás una notificación por correo electrónico de parte del administrador de la votación o de la plataforma VoxPopuly. Este correo contendrá un enlace o instrucciones para acceder. También, si ya tienes una cuenta en VoxPopuly, al iniciar sesión podrías ver las convocatorias activas en las que puedes participar.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">2. ¿Cómo emito mi voto?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Accede a la convocatoria a través del enlace proporcionado o desde tu panel de usuario.</p>
+                        <p class="text-gray-700 mt-2">Verás el título, la descripción de la votación y las opciones o candidatos disponibles.</p>
+                        <p class="text-700 mt-2">Lee cuidadosamente la información.</p>
+                        <p class="text-gray-700 mt-2">Selecciona la opción o candidato de tu preferencia haciendo clic sobre él/ella.</p>
+                        <p class="text-gray-700 mt-2">Habrá un botón para "Confirmar Voto", "Emitir Voto" o similar. Haz clic en él.</p>
+                        <p class="text-gray-700 mt-2">(Opcional, si existe) Puede que veas una pantalla de confirmación final. Asegúrate de que tu selección es correcta antes de confirmar definitivamente.</p>
+                        <p class="text-gray-700 mt-2">¡Listo! Tu voto ha sido registrado. Deberías ver un mensaje de confirmación.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">3. ¿Puedo cambiar mi voto después de haberlo emitido?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Generalmente, por la integridad del proceso electoral, una vez que tu voto ha sido confirmado, no puede ser modificado ni revertido. Asegúrate bien de tu elección antes de confirmar. La plataforma te advertirá sobre esto antes de la confirmación final (como se ve en tu mockup de "Confirmar tu voto").</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">4. ¿Qué hago si tengo problemas técnicos para votar?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Primero, asegúrate de tener una conexión a internet estable y estar utilizando un navegador web actualizado. Si el problema persiste:</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Intenta refrescar la página.</li>
+                            <li>Prueba en otro navegador o dispositivo.</li>
+                            <li>Contacta al administrador de la votación de tu organización; ellos podrían tener información específica o podrán contactar al soporte de VoxPopuly si es un problema de la plataforma.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">5. ¿Cómo puedo estar seguro de que mi voto fue contado y es anónimo (si aplica)?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">VoxPopuly está diseñado para que recibas una confirmación inmediata de que tu voto ha sido registrado. En cuanto al anonimato, la plataforma está construida para separar tu identidad de tu elección específica en votaciones confidenciales. Los administradores ven los totales, no el desglose individual, a menos que la naturaleza de la votación sea explícitamente pública y se te informe de ello.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h3 class="font-bold text-lg">6. ¿Cuándo y cómo podré ver los resultados de la votación?</h3>
+                        <span class="accordion-icon">▼</span>
+                    </div>
+                    <div class="accordion-content">
+                        <p class="text-gray-700">Esto depende de la configuración establecida por el administrador de la convocatoria.</p>
+                        <ul class="list-disc list-inside text-gray-700 mt-2">
+                            <li>Algunas votaciones pueden mostrar los resultados a los votantes inmediatamente después de que la votación cierra.</li>
+                            <li>En otros casos, el administrador puede optar por revisar y luego comunicar los resultados por otros medios.</li>
+                            <li>Si los resultados se publican en la plataforma, generalmente podrás acceder a ellos desde el mismo enlace de la convocatoria una vez haya finalizado, o desde tu panel de usuario.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <footer class="text-center mt-16 py-8 border-t-2 border-blue-100">
             <h3 class="text-3xl font-bold text-blue-700 mb-4">¡Moderniza tus elecciones con VoxPopuly!</h3>
             <p class="text-lg text-gray-500">&copy; 2025 VoxPopuly. Todos los derechos reservados.</p>
@@ -436,6 +798,109 @@
                         }
                     }
                 }
+            });
+
+            // Accordion functionality for all accordion items
+            const allAccordionHeaders = document.querySelectorAll('.accordion-header');
+
+            allAccordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const currentContent = header.nextElementSibling;
+                    const currentIcon = header.querySelector('.accordion-icon');
+
+                    // Close all other open accordion items in the same parent tab-content
+                    const parentTabContent = header.closest('.tab-content');
+                    if (parentTabContent) {
+                        parentTabContent.querySelectorAll('.accordion-header.open').forEach(otherHeader => {
+                            const otherContent = otherHeader.nextElementSibling;
+                            const otherIcon = otherHeader.querySelector('.accordion-icon');
+
+                            if (otherHeader !== header) {
+                                otherContent.classList.remove('open');
+                                otherHeader.classList.remove('open');
+                                otherIcon.style.transform = 'rotate(0deg)';
+                            }
+                        });
+                    } else { // For the first FAQ section which is not inside a tab
+                        // Check if the header is part of the "FAQ para Nuevos Usuarios" section
+                        const isNewUserFaq = header.closest('#faq-nuevos-usuarios');
+                        if (isNewUserFaq) {
+                            document.querySelectorAll('#faq-nuevos-usuarios .accordion-header.open').forEach(otherHeader => {
+                                const otherContent = otherHeader.nextElementSibling;
+                                const otherIcon = otherHeader.querySelector('.accordion-icon');
+
+                                if (otherHeader !== header) {
+                                    otherContent.classList.remove('open');
+                                    otherHeader.classList.remove('open');
+                                    otherIcon.style.transform = 'rotate(0deg)';
+                                }
+                            });
+                        }
+                    }
+
+                    // Toggle current accordion item
+                    currentContent.classList.toggle('open');
+                    header.classList.toggle('open');
+                    if (currentContent.classList.contains('open')) {
+                        currentIcon.style.transform = 'rotate(180deg)';
+                    } else {
+                        currentIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+            // Tab functionality for FAQ for Existing Customers
+            const adminFaqBtn = document.getElementById('adminFaqBtn');
+            const voterFaqBtn = document.getElementById('voterFaqBtn');
+            const adminFaqContent = document.getElementById('adminFaqContent');
+            const voterFaqContent = document.getElementById('voterFaqContent');
+            const toggleSlider = document.getElementById('toggleSlider');
+
+            // Function to show a specific tab
+            function showTab(tabToShow, buttonToActivate, sliderElement, adminButton, voterButton) {
+                // Hide all tab contents
+                document.querySelectorAll('#faq-clientes-existentes .tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                // Deactivate all tab buttons
+                adminButton.classList.remove('active');
+                voterButton.classList.remove('active');
+
+                // Show the selected tab content
+                tabToShow.classList.add('active');
+                // Activate the selected button
+                buttonToActivate.classList.add('active');
+
+                // Animate the slider
+                const buttonWidth = adminButton.offsetWidth; // Assuming both buttons have the same width
+                if (buttonToActivate === adminButton) {
+                    sliderElement.style.transform = 'translateX(0)';
+                } else {
+                    sliderElement.style.transform = `translateX(${buttonWidth}px)`;
+                }
+
+                // Close all accordions in the currently hidden tab before switching
+                document.querySelectorAll('#faq-clientes-existentes .accordion-content.open').forEach(content => {
+                    content.classList.remove('open');
+                    content.previousElementSibling.classList.remove('open');
+                    content.previousElementSibling.querySelector('.accordion-icon').style.transform = 'rotate(0deg)';
+                });
+            }
+
+            // Event listeners for tab buttons
+            adminFaqBtn.addEventListener('click', () => {
+                showTab(adminFaqContent, adminFaqBtn, toggleSlider, adminFaqBtn, voterFaqBtn);
+            });
+
+            voterFaqBtn.addEventListener('click', () => {
+                showTab(voterFaqContent, voterFaqBtn, toggleSlider, adminFaqBtn, voterFaqBtn);
+            });
+
+            // Initially set up the slider width and show the admin tab
+            window.addEventListener('load', () => {
+                const buttonWidth = adminFaqBtn.offsetWidth; // Get width after rendering
+                toggleSlider.style.width = `${buttonWidth}px`;
+                showTab(adminFaqContent, adminFaqBtn, toggleSlider, adminFaqBtn, voterFaqBtn);
             });
         });
     </script>
